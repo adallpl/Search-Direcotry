@@ -404,19 +404,6 @@
      <string>Analyse</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_MIME">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>230</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Check MIME Type</string>
-    </property>
-   </widget>
    <widget class="QListWidget" name="listWidget_Results">
     <property name="geometry">
      <rect>
@@ -432,7 +419,7 @@
      <rect>
       <x>530</x>
       <y>260</y>
-      <width>191</width>
+      <width>271</width>
       <height>241</height>
      </rect>
     </property>
@@ -580,7 +567,6 @@
    <zorder>groupBox_Maska</zorder>
    <zorder>groupBox_NazwPlik</zorder>
    <zorder>pushButton_Analyse</zorder>
-   <zorder>pushButton_MIME</zorder>
    <zorder>listWidget_Results</zorder>
    <zorder>listWidget_Errors</zorder>
    <zorder>label_Test</zorder>

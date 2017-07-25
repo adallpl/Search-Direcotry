@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->lineEdit_Name1, SLOT(setEnabled(bool)));
-     connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->label_Sep1, SLOT(setDisabled(bool)));     //sep1
+   //  connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->label_Sep1, SLOT(setDisabled(bool)));     //sep1
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setChecked(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg2, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setDisabled(bool)));
@@ -133,16 +133,6 @@ void MainWindow::on_pushButton_Analyse_clicked()
     all_string = string1 + sep1 + string2 + sep2 + string3 + sep3 + string4 + sep4 + string5;
     ui->label_Test ->setText("Szukany string: "+ all_string + "." + ui->comboBox_Mask->currentText());
 }
-void MainWindow::on_pushButton_MIME_clicked()
-{
-    QString path("/home/my_user/my_file");
-    #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-        QMimeDatabase db;
-        QMimeType type = db.mimeTypeForFile(path);
-      // std::cout << "Mime type:" << type.name();
-    #endif
-    QMessageBox::about(this, "Title", "Mime type: " + type.name());
-}
 
 void  MainWindow::animateFindingClick()
 {
@@ -159,6 +149,20 @@ void MainWindow::on_lineEdit_Sep_textChanged(const QString &arg1)
 
 void MainWindow::on_lineEditFilter_textChanged(const QString &arg1)
 {
+    /*string2 = ui->lineEdit_Name2 ->text();
+    QDir myPath= ui->comboBox_Browse->currentText();
+    QRegExp reg_exp(myPath, QRegExp::Wildcard | Qt::CaseInsensitive);
+    reg_exp.setPatternSyntax(QRegExp::Wildcard);
+    if(reg_exp.exactMatch(string2)){
+    ui->listWidget_Errors->addItem()
+    }*/
+
+    QDir myPath= ui->comboBox_Browse->currentText();
+    myPath.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+    myList = myPath.entryList();
+    ui->listWidget_Errors->addItems(myList);
+    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));
+
     QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);
     ui->listWidget_Errors->clear();
     ui->listWidget_Errors->addItems(myList.filter(regExp));
@@ -166,9 +170,10 @@ void MainWindow::on_lineEditFilter_textChanged(const QString &arg1)
 }
 
 
+
 static void findRecursion(const QString &path, const QString &pattern, QStringList *result)
 {
-
+    //QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);
     QDir currentDir(path);
     const QString prefix = path + QLatin1Char('/');
     foreach (const QString &match, currentDir.entryList(QStringList(pattern), QDir::Files | QDir::NoSymLinks))
@@ -286,6 +291,15 @@ void MainWindow::find()
 }*/
 void MainWindow::showFiles2(const QStringList &files)
 {
+   // QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);  , const QString &arg1
     ui->listWidget_Results->addItems(files);
+}
+void MainWindow::Find_by_Reg()
+{
+    QRegExp reg_exp(ui->comboBox_Mask->currentText());
+    reg_exp.setPatternSyntax(QRegExp::Wildcard);
+    if(reg_exp.exactMatch(ui->lineEdit_Name2->text())){
+    //ui->listWidget_Errors->addItem()
+    }
 }
 
