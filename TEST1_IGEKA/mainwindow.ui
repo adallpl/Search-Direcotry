@@ -20,7 +20,7 @@
       <x>20</x>
       <y>10</y>
       <width>651</width>
-      <height>91</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="title">
@@ -75,7 +75,7 @@
       <string>Maska ogólna</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_Maska">
+    <widget class="QComboBox" name="comboBox_Mask">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -108,7 +108,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>_</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="label_Sep2">
@@ -121,7 +121,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>_</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="label_Sep3">
@@ -134,7 +134,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>_</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="label_Sep4">
@@ -147,10 +147,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>_</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Nazwa5">
+    <widget class="QCheckBox" name="checkBox_Name5">
      <property name="geometry">
       <rect>
        <x>79</x>
@@ -163,7 +163,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Nazwa2">
+    <widget class="QCheckBox" name="checkBox_Name2">
      <property name="geometry">
       <rect>
        <x>22</x>
@@ -176,7 +176,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Nazwa1">
+    <widget class="QCheckBox" name="checkBox_Name1">
      <property name="geometry">
       <rect>
        <x>3</x>
@@ -189,7 +189,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Nazwa3">
+    <widget class="QCheckBox" name="checkBox_Name3">
      <property name="geometry">
       <rect>
        <x>41</x>
@@ -202,7 +202,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Nazwa4">
+    <widget class="QCheckBox" name="checkBox_Name4">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -278,7 +278,7 @@
       <string>Pomiń część przy szukaniu</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_CalaNazwa">
+    <widget class="QCheckBox" name="checkBox_FullName">
      <property name="geometry">
       <rect>
        <x>661</x>
@@ -317,7 +317,7 @@
       <string>Reguły zdublowań</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_Cz4">
+    <widget class="QLineEdit" name="lineEdit_Name4">
      <property name="geometry">
       <rect>
        <x>398</x>
@@ -327,7 +327,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_Cz2">
+    <widget class="QLineEdit" name="lineEdit_Name2">
      <property name="geometry">
       <rect>
        <x>135</x>
@@ -337,7 +337,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_Cz1">
+    <widget class="QLineEdit" name="lineEdit_Name1">
      <property name="geometry">
       <rect>
        <x>4</x>
@@ -347,7 +347,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_Cz5">
+    <widget class="QLineEdit" name="lineEdit_Name5">
      <property name="geometry">
       <rect>
        <x>530</x>
@@ -357,7 +357,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_Cz3">
+    <widget class="QLineEdit" name="lineEdit_Name3">
      <property name="geometry">
       <rect>
        <x>267</x>
@@ -367,27 +367,27 @@
       </rect>
      </property>
     </widget>
-    <zorder>lineEdit_Cz4</zorder>
-    <zorder>lineEdit_Cz2</zorder>
-    <zorder>lineEdit_Cz1</zorder>
-    <zorder>lineEdit_Cz5</zorder>
-    <zorder>lineEdit_Cz3</zorder>
+    <zorder>lineEdit_Name4</zorder>
+    <zorder>lineEdit_Name2</zorder>
+    <zorder>lineEdit_Name1</zorder>
+    <zorder>lineEdit_Name5</zorder>
+    <zorder>lineEdit_Name3</zorder>
     <zorder>label_Sep1</zorder>
     <zorder>label_Sep2</zorder>
     <zorder>label_Sep3</zorder>
     <zorder>label_Sep4</zorder>
-    <zorder>checkBox_Nazwa5</zorder>
-    <zorder>checkBox_Nazwa2</zorder>
-    <zorder>checkBox_Nazwa1</zorder>
-    <zorder>checkBox_Nazwa3</zorder>
-    <zorder>checkBox_Nazwa4</zorder>
+    <zorder>checkBox_Name5</zorder>
+    <zorder>checkBox_Name2</zorder>
+    <zorder>checkBox_Name1</zorder>
+    <zorder>checkBox_Name3</zorder>
+    <zorder>checkBox_Name4</zorder>
     <zorder>comboBox_Reg1</zorder>
     <zorder>comboBox_Reg2</zorder>
     <zorder>comboBox_Reg3</zorder>
     <zorder>comboBox_Reg4</zorder>
     <zorder>comboBox_Reg5</zorder>
     <zorder>label_3</zorder>
-    <zorder>checkBox_CalaNazwa</zorder>
+    <zorder>checkBox_FullName</zorder>
     <zorder>label_2</zorder>
     <zorder>label</zorder>
    </widget>
@@ -417,17 +417,17 @@
      <string>Check MIME Type</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_Zdubl">
+   <widget class="QListWidget" name="listWidget_Results">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>260</y>
+      <y>300</y>
       <width>491</width>
-      <height>241</height>
+      <height>201</height>
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_Bledy">
+   <widget class="QListWidget" name="listWidget_Errors">
     <property name="geometry">
      <rect>
       <x>530</x>
@@ -472,7 +472,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_9"/>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -494,7 +494,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -520,6 +520,72 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label_Test2">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>260</y>
+      <width>401</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Find">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>260</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Find</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>80</y>
+      <width>211</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_Sep">
+       <property name="text">
+        <string>Podaj separator</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_Sep"/>
+     </item>
+    </layout>
+   </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>groupBox_Kat</zorder>
@@ -527,13 +593,14 @@
    <zorder>groupBox_NazwPlik</zorder>
    <zorder>pushButton_Analyse</zorder>
    <zorder>pushButton_MIME</zorder>
-   <zorder>listWidget_Zdubl</zorder>
-   <zorder>listWidget_Bledy</zorder>
+   <zorder>listWidget_Results</zorder>
+   <zorder>listWidget_Errors</zorder>
    <zorder>label_Test</zorder>
-   <zorder>label_Filter</zorder>
-   <zorder>lineEditFilter</zorder>
-   <zorder>label_4</zorder>
-   <zorder>label_Total</zorder>
+   <zorder>lineEdit_Sep</zorder>
+   <zorder>label_Sep</zorder>
+   <zorder>horizontalSpacer</zorder>
+   <zorder>label_Test2</zorder>
+   <zorder>pushButton_Find</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
