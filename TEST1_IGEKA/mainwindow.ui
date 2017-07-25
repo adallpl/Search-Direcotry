@@ -523,9 +523,9 @@
    <widget class="QLabel" name="label_Test2">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>10</x>
       <y>260</y>
-      <width>401</width>
+      <width>521</width>
       <height>21</height>
      </rect>
     </property>
@@ -533,20 +533,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_Find">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>260</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Find</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -588,6 +575,7 @@
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>groupBox_Kat</zorder>
    <zorder>groupBox_Maska</zorder>
    <zorder>groupBox_NazwPlik</zorder>
@@ -596,11 +584,7 @@
    <zorder>listWidget_Results</zorder>
    <zorder>listWidget_Errors</zorder>
    <zorder>label_Test</zorder>
-   <zorder>lineEdit_Sep</zorder>
-   <zorder>label_Sep</zorder>
-   <zorder>horizontalSpacer</zorder>
    <zorder>label_Test2</zorder>
-   <zorder>pushButton_Find</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

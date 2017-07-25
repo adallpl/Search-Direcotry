@@ -28,8 +28,6 @@ private slots:
     void find();
     void on_lineEdit_Sep_textChanged(const QString &arg1);
 
-    void on_pushButton_Find_clicked();
-
 private:
     Ui::MainWindow *ui;
     QStringList myList;
