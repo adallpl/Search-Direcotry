@@ -23,17 +23,19 @@ private slots:
     void on_pushButton_Browse_clicked();
     void on_pushButton_Analyse_clicked();
     void animateFindingClick();
-    void on_pushButton_MIME_clicked();
     void on_lineEditFilter_textChanged(const QString &arg1);
-    void find();
+    void Find_by();
     void on_lineEdit_Sep_textChanged(const QString &arg1);
+
+    void on_pushButton_Test_clicked();
 
 private:
     Ui::MainWindow *ui;
     QStringList myList;
-    void showFiles(const QStringList &files);
     void showFiles2(const QStringList &files);
-   // QStringList findFiles(const QStringList &files, const QString &text);
+    bool ismatch(const QString &next_file_name, const QString &string1, const QString &string2, const QString &string3,
+                 const QString &string4, const QString &string5, const QString &separator, const QString &filter);
+    QString *tab_File_Qstring(const QString &FileQString, int size, const QString &separator);
     QDir currentDir;
 };
 

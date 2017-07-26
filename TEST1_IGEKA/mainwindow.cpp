@@ -10,9 +10,9 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QDirIterator>
-
-QString mask_pdf = "*pdf";
-QString mask_doc = "*doc";
+#include <QRegExp>
+QString mask_pdf = "*.pdf";
+QString mask_doc = "*.docx";
 QString equal = "=";
 QString different = "<>";
 QString none = "żadne";
@@ -45,7 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    connect(ui->comboBox_Modul4->lineEdit(), &QLineEdit::returnPressed,
 //           this, &MainWindow::animateFindingClick);
-    connect(ui->pushButton_Analyse, &QAbstractButton::clicked, this, &MainWindow::find);
+   // connect(ui->pushButton_Analyse, &QAbstractButton::clicked, this, &MainWindow::find);
+    connect(ui->pushButton_Analyse, &QAbstractButton::clicked, this, &MainWindow::Find_by);
     connect(ui->pushButton_Browse, &QAbstractButton::windowTitleChanged, this, &MainWindow::on_pushButton_Browse_clicked);
 //    connect(ui->comboBox_Browse, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
 //            this, &MainWindow::on_pushButton_Analyse_clicked);
@@ -57,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->lineEdit_Name1, SLOT(setEnabled(bool)));
-     connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->label_Sep1, SLOT(setDisabled(bool)));     //sep1
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setChecked(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg2, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setDisabled(bool)));
@@ -95,7 +95,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 static void updateComboBox(QComboBox *comboBox)
 {
     if (comboBox->findText(comboBox->currentText()) == -1)
@@ -115,33 +114,19 @@ void MainWindow::on_pushButton_Browse_clicked()
 
 void MainWindow::on_pushButton_Analyse_clicked()
 {
-    QString string1;
-    QString string2;
-    QString string3;
-    QString string4;
-    QString string5;
-
     QString sep1 = ui->label_Sep1 ->text();
     QString sep2 = ui->label_Sep2 ->text();
     QString sep3 = ui->label_Sep3 ->text();
     QString sep4 = ui->label_Sep4 ->text();
-    string1 = ui->lineEdit_Name1 ->text();
-    string2 = ui->lineEdit_Name2 ->text();
-    string3 = ui->lineEdit_Name3 ->text();
-    string4 = ui->lineEdit_Name4 ->text();
-    string5 = ui->lineEdit_Name5 ->text();
+    QString string1 = ui->lineEdit_Name1 ->text();
+    QString string2 = ui->lineEdit_Name2 ->text();
+    QString string3 = ui->lineEdit_Name3 ->text();
+    QString string4 = ui->lineEdit_Name4 ->text();
+    QString string5 = ui->lineEdit_Name5 ->text();
+
     all_string = string1 + sep1 + string2 + sep2 + string3 + sep3 + string4 + sep4 + string5;
-    ui->label_Test ->setText("Szukany string: "+ all_string + "." + ui->comboBox_Mask->currentText());
-}
-void MainWindow::on_pushButton_MIME_clicked()
-{
-    QString path("/home/my_user/my_file");
-    #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-        QMimeDatabase db;
-        QMimeType type = db.mimeTypeForFile(path);
-      // std::cout << "Mime type:" << type.name();
-    #endif
-    QMessageBox::about(this, "Title", "Mime type: " + type.name());
+    ui->label_Test ->setText("Szukany string: "+ all_string + ui->comboBox_Mask->currentText());
+
 }
 
 void  MainWindow::animateFindingClick()
@@ -159,133 +144,128 @@ void MainWindow::on_lineEdit_Sep_textChanged(const QString &arg1)
 
 void MainWindow::on_lineEditFilter_textChanged(const QString &arg1)
 {
+    /*string2 = ui->lineEdit_Name2 ->text();
+    QDir myPath= ui->comboBox_Browse->currentText();
+    QRegExp reg_exp(myPath, QRegExp::Wildcard | Qt::CaseInsensitive);
+    reg_exp.setPatternSyntax(QRegExp::Wildcard);
+    if(reg_exp.exactMatch(string2)){
+    ui->listWidget_Errors->addItem()
+    }*/
+/*
+    QDir myPath= ui->comboBox_Browse->currentText();
+    myPath.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+    myList = myPath.entryList();
+    ui->listWidget_Errors->addItems(myList);
+    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));
+
     QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);
     ui->listWidget_Errors->clear();
     ui->listWidget_Errors->addItems(myList.filter(regExp));
-    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));
+    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));*/
 }
 
-
-static void findRecursion(const QString &path, const QString &pattern, QStringList *result)
+void MainWindow::showFiles2(const QStringList &files)
 {
-
-    QDir currentDir(path);
-    const QString prefix = path + QLatin1Char('/');
-    foreach (const QString &match, currentDir.entryList(QStringList(pattern), QDir::Files | QDir::NoSymLinks))
-        result->append(prefix + match);
-    foreach (const QString &dir, currentDir.entryList(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot))
-        findRecursion(prefix + dir, pattern, result);
+    ui->listWidget_Results->addItems(files);
 }
-
-void MainWindow::find()
+void MainWindow::Find_by()
 {
     ui->listWidget_Results->clear();
+    QString filter = ui->comboBox_Mask->currentText();
 
+    QString sep = ui->lineEdit_Sep -> text();
     QString string1 = ui->lineEdit_Name1 ->text();
     QString string2 = ui->lineEdit_Name2 ->text();
     QString string3 = ui->lineEdit_Name3 ->text();
     QString string4 = ui->lineEdit_Name4 ->text();
     QString string5 = ui->lineEdit_Name5 ->text();
-    QString sep1 = ui->label_Sep1 ->text();
-    QString sep2 = ui->label_Sep2 ->text();
-    QString sep3 = ui->label_Sep3 ->text();
-    QString sep4 = ui->label_Sep4 ->text();
 
-    all_string = string1 + sep1 + string2 + sep2 + string3 + sep3 + string4 + sep4 + string5 + "*" +  ui->comboBox_Mask->currentText();
-    QString fileName = all_string;
+    QString targetStr = ui->lineEdit_Name2 ->text(); // What we search for
 
-    QString path = QDir::cleanPath(ui->comboBox_Browse->currentText());
-    updateComboBox(ui->comboBox_Browse);
-    ui->label_Test2->setText(path);
-    currentDir = QDir(path);
-    QStringList files;
+    QStringList listFiles; // list for matches targets
+    QString directory = ui->comboBox_Browse->currentText(); // Where to search
+    QDirIterator iterator(directory, QStringList() << filter, QDir::Files, QDirIterator::Subdirectories);
+    while (iterator.hasNext()) {//zwraca false jesli nie napotka direct lub zwraca true jesli napotka,
+        QString filename = iterator.next(); //przejscie iteratora do kolejnego wejscia
+        QFileInfo file(filename);
 
-  if(ui->lineEdit_Name1->isEnabled())
-  {
-      findRecursion(path, string1 + ui->comboBox_Mask->currentText(), &files);
-  }
-
-  QString fn = files.at(0);
-
-  QFile fnFile;
-  ui->label_Test2->setText(fnFile.objectName());
-
-    //findRecursion(path, fileName, &files);
-    //if (!text.isEmpty())
-    //files = findFiles(files, text);     ///!!!
-    showFiles2(files);                     ///!!!
-}
-/*QStringList MainWindow::findFiles(const QStringList &files, const QString &text)
-{
-    QProgressDialog progressDialog(this);
-    progressDialog.setCancelButtonText(tr("&Cancel"));
-    progressDialog.setRange(0, files.size());
-    progressDialog.setWindowTitle(tr("Find Files"));
-
-    QMimeDatabase mimeDatabase;
-    QStringList foundFiles;
-
-    for (int i = 0; i < files.size(); ++i) {
-        progressDialog.setValue(i);
-        progressDialog.setLabelText(tr("Searching file number %1 of %n...", 0, files.size()).arg(i));
-        QCoreApplication::processEvents();
-
-
-        if (progressDialog.wasCanceled())
-            break;
-
-        const QString fileName = files.at(i);
-        const QMimeType mimeType = mimeDatabase.mimeTypeForFile(fileName);
-        if (mimeType.isValid() && !mimeType.inherits(QStringLiteral("text/plain"))) {
-            qWarning() << "Not searching binary file " << QDir::toNativeSeparators(fileName);
+        if (file.isDir()) { // Check if it's a dir
             continue;
         }
-        QFile file(fileName);
-        if (file.open(QIODevice::ReadOnly)) {
-            QString line;
-            QTextStream in(&file);
-            while (!in.atEnd()) {
-                if (progressDialog.wasCanceled())
-                    break;
-                line = in.readLine();
-                if (line.contains(text, Qt::CaseInsensitive)) {
-                    foundFiles << files[i];
-                    break;
-                }
-            }
+
+
+//       if (ismatch(filename, string1, string2, string3, string4, string5, sep, filter))
+//       {
+//           listFiles << filename;
+//       }
+
+
+       //  If the filename contains target string - put it in the hitlist
+        if (file.fileName().contains(targetStr, Qt::CaseInsensitive)) {
+            listFiles << filename;
+             ui->label_Test2 ->setText(file.fileName());
         }
-    }
-    return foundFiles;
-}*/
 
-/*void MainWindow::showFiles(const QStringList &files)
-{
-    for (int i = 0; i < files.size(); ++i) {
-        const QString &fileName = files.at(i);
-        const QString toolTip = QDir::toNativeSeparators(fileName);
-        const QString relativePath = QDir::toNativeSeparators(currentDir.relativeFilePath(fileName));
-        const qint64 size = QFileInfo(fileName).size();
-        QTableWidgetItem *fileNameItem = new QTableWidgetItem(relativePath);
-        fileNameItem->setData(absoluteFileNameRole, QVariant(fileName));
-        fileNameItem->setToolTip(toolTip);
-        fileNameItem->setFlags(fileNameItem->flags() ^ Qt::ItemIsEditable);
-        QTableWidgetItem *sizeItem = new QTableWidgetItem(tr("%1 KB")
-                                             .arg(int((size + 1023) / 1024)));
-        sizeItem->setData(absoluteFileNameRole, QVariant(fileName));
-        sizeItem->setToolTip(toolTip);
-        sizeItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        sizeItem->setFlags(sizeItem->flags() ^ Qt::ItemIsEditable);
 
-        int row = filesTable->rowCount();
-        filesTable->insertRow(row);
-        filesTable->setItem(row, 0, fileNameItem);
-        filesTable->setItem(row, 1, sizeItem);
     }
-    filesFoundLabel->setText(tr("%n file(s) found (Double click on a file to open it)", 0, files.size()));
-    filesFoundLabel->setWordWrap(true);
-}*/
-void MainWindow::showFiles2(const QStringList &files)
-{
-    ui->listWidget_Results->addItems(files);
+ showFiles2(listFiles);
+
+//    rozszerzenie - suffix
+//    QFileInfo fi("/tmp/archive.tar.gz");
+//    QString file_suffix = fi.suffix();  // ext = "gz"*/
+
+//    //nazwa pliku - fileName
+//    QFileInfo fi("/tmp/archive.tar.gz");
+//    QString name = fi.fileName();
 }
 
+bool MainWindow::ismatch(const QString &next_file_name, const QString &string1, const QString &string2, const QString &string3,
+                         const QString &string4, const QString &string5, const QString &separator, const QString &filter)
+{
+    QString filter_correct = filter;
+    filter_correct = filter_correct.remove(0, 1);
+    QString user_file_name = string1 + separator + string2 + separator + string3 + separator + string4 + separator + string5;
+
+    QString correct_next_file_name = next_file_name;
+
+    int pos = correct_next_file_name.indexOf(filter_correct); //5
+    correct_next_file_name = correct_next_file_name.remove(pos, 5);
+
+    //ui->listWidget_Errors ->addItems("File name: " + file.fileName());
+    QString * Tab_QStrFile = tab_File_Qstring(correct_next_file_name, 5, separator);
+    QString * Tab_QStrUser = tab_File_Qstring(user_file_name, 5, separator);
+    QStringList lists;
+    lists << Tab_QStrFile[0]<< Tab_QStrFile[1]<< Tab_QStrFile[2]<< Tab_QStrFile[3]<< Tab_QStrFile[4]<< Tab_QStrUser[0]<< Tab_QStrUser[1]<< Tab_QStrUser[2]<< Tab_QStrUser[3]<< Tab_QStrUser[4];
+    ui->listWidget_Errors->addItems(lists);
+}
+
+QString *MainWindow::tab_File_Qstring(const QString &FileQString, int size, const QString &separator)
+{
+    QString *newQTab = new QString[size];
+    QString tempQStMAIN = FileQString;
+   // tempQStMAIN = tempQStMAIN.append(separator);
+    QString TempQstab = tempQStMAIN;
+    QString TempQS_less_and_less = tempQStMAIN;
+    int pos;
+
+    for(int i = 0; i < 5; i++)
+    {
+       pos = TempQS_less_and_less.indexOf(separator); //5
+       TempQstab = TempQstab.remove(pos, 50);
+       newQTab[i] = TempQstab;
+       TempQS_less_and_less = TempQS_less_and_less.remove(0, pos+1);
+       TempQstab = TempQS_less_and_less;
+    }
+    return newQTab;
+    //ABCDE-12345-FGHIH-56789-HOPFD
+}
+
+
+void MainWindow::on_pushButton_Test_clicked()
+{
+    QString *Tab_QStrFile = tab_File_Qstring("ABCDE-12345-FGHIH-56789-HOPFD.*pdf", 5, ui->comboBox_Mask->currentText());
+    QStringList lists;
+    lists << Tab_QStrFile[0]<< Tab_QStrFile[1]<< Tab_QStrFile[2]<< Tab_QStrFile[3]<< Tab_QStrFile[4];
+    ui->listWidget_Errors->addItems(lists);
+    ui->label_Test2->setText(Tab_QStrFile[0]);
+}

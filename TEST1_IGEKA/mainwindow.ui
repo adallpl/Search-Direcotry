@@ -150,71 +150,6 @@
       <string/>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_Name5">
-     <property name="geometry">
-      <rect>
-       <x>79</x>
-       <y>53</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_Name2">
-     <property name="geometry">
-      <rect>
-       <x>22</x>
-       <y>53</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_Name1">
-     <property name="geometry">
-      <rect>
-       <x>3</x>
-       <y>53</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_Name3">
-     <property name="geometry">
-      <rect>
-       <x>41</x>
-       <y>53</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_Name4">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>53</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QComboBox" name="comboBox_Reg1">
      <property name="geometry">
       <rect>
@@ -367,6 +302,53 @@
       </rect>
      </property>
     </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>3</x>
+       <y>53</y>
+       <width>311</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QCheckBox" name="checkBox_Name1">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_Name2">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_Name3">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_Name4">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_Name5">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
     <zorder>lineEdit_Name4</zorder>
     <zorder>lineEdit_Name2</zorder>
     <zorder>lineEdit_Name1</zorder>
@@ -394,7 +376,7 @@
    <widget class="QPushButton" name="pushButton_Analyse">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>230</y>
       <width>75</width>
       <height>23</height>
@@ -402,19 +384,6 @@
     </property>
     <property name="text">
      <string>Analyse</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_MIME">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>230</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Check MIME Type</string>
     </property>
    </widget>
    <widget class="QListWidget" name="listWidget_Results">
@@ -430,9 +399,9 @@
    <widget class="QListWidget" name="listWidget_Errors">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>510</x>
       <y>260</y>
-      <width>191</width>
+      <width>271</width>
       <height>241</height>
      </rect>
     </property>
@@ -440,9 +409,9 @@
    <widget class="QLabel" name="label_Test">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>100</x>
       <y>230</y>
-      <width>521</width>
+      <width>401</width>
       <height>16</height>
      </rect>
     </property>
@@ -475,7 +444,7 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>500</x>
       <y>510</y>
       <width>165</width>
       <height>73</height>
@@ -490,15 +459,15 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditFilter"/>
+      <widget class="QLineEdit" name="lineEditTest"/>
      </item>
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>590</y>
+      <x>500</x>
+      <y>580</y>
       <width>171</width>
       <height>16</height>
      </rect>
@@ -525,7 +494,7 @@
      <rect>
       <x>10</x>
       <y>260</y>
-      <width>521</width>
+      <width>491</width>
       <height>21</height>
      </rect>
     </property>
@@ -571,6 +540,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="pushButton_Test">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>510</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test Button</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
@@ -580,11 +562,11 @@
    <zorder>groupBox_Maska</zorder>
    <zorder>groupBox_NazwPlik</zorder>
    <zorder>pushButton_Analyse</zorder>
-   <zorder>pushButton_MIME</zorder>
    <zorder>listWidget_Results</zorder>
    <zorder>listWidget_Errors</zorder>
    <zorder>label_Test</zorder>
    <zorder>label_Test2</zorder>
+   <zorder>pushButton_Test</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -607,6 +589,33 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>comboBox_Browse</tabstop>
+  <tabstop>pushButton_Browse</tabstop>
+  <tabstop>comboBox_Mask</tabstop>
+  <tabstop>lineEdit_Sep</tabstop>
+  <tabstop>lineEdit_Name1</tabstop>
+  <tabstop>lineEdit_Name2</tabstop>
+  <tabstop>lineEdit_Name3</tabstop>
+  <tabstop>lineEdit_Name4</tabstop>
+  <tabstop>lineEdit_Name5</tabstop>
+  <tabstop>checkBox_FullName</tabstop>
+  <tabstop>checkBox_Name1</tabstop>
+  <tabstop>checkBox_Name2</tabstop>
+  <tabstop>checkBox_Name3</tabstop>
+  <tabstop>checkBox_Name4</tabstop>
+  <tabstop>checkBox_Name5</tabstop>
+  <tabstop>comboBox_Reg1</tabstop>
+  <tabstop>comboBox_Reg2</tabstop>
+  <tabstop>comboBox_Reg3</tabstop>
+  <tabstop>comboBox_Reg4</tabstop>
+  <tabstop>comboBox_Reg5</tabstop>
+  <tabstop>pushButton_Analyse</tabstop>
+  <tabstop>listWidget_Results</tabstop>
+  <tabstop>listWidget_Errors</tabstop>
+  <tabstop>lineEditTest</tabstop>
+  <tabstop>pushButton_Test</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
