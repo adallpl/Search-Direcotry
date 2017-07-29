@@ -23,7 +23,6 @@ private slots:
     void on_pushButton_Browse_clicked();
     void on_pushButton_Analyse_clicked();
     void animateFindingClick();
-    void on_lineEditFilter_textChanged(const QString &arg1);
     void Find_by();
     void on_lineEdit_Sep_textChanged(const QString &arg1);
 
@@ -35,7 +34,7 @@ private:
     void showFiles2(const QStringList &files);
     bool ismatch(const QString &next_file_name, const QString &string1, const QString &string2, const QString &string3,
                  const QString &string4, const QString &string5, const QString &separator, const QString &filter);
-    QString *tab_File_Qstring(const QString &FileQString, int size, const QString &separator);
+    QString *QString_to_Tab(const QString &FileQString, int size, const QString &separator, const QString &mask);
     QDir currentDir;
 };
 

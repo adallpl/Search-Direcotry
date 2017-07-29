@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name1, SLOT(setDisabled(bool)));
     connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->lineEdit_Name1, SLOT(setEnabled(bool)));
+        connect(ui->checkBox_Name1, SIGNAL(toggled(bool)), ui->checkBox_Name1, SLOT(setChecked(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setChecked(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg2, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name2, SLOT(setDisabled(bool)));
@@ -77,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->comboBox_Reg5, SLOT(setDisabled(bool)));
     connect(ui->checkBox_FullName, SIGNAL(toggled(bool)), ui->checkBox_Name5, SLOT(setDisabled(bool)));
     connect(ui->checkBox_Name5, SIGNAL(toggled(bool)), ui->lineEdit_Name5, SLOT(setEnabled(bool)));
+
      connect(ui->checkBox_Name5, SIGNAL(toggled(bool)), ui->label_Sep4, SLOT(setEnabled(bool)));     //sep4
     connect(ui->lineEdit_Name1, SIGNAL(textChanged(const QString &)), this, SLOT(text()));
 
@@ -126,7 +128,6 @@ void MainWindow::on_pushButton_Analyse_clicked()
 
     all_string = string1 + sep1 + string2 + sep2 + string3 + sep3 + string4 + sep4 + string5;
     ui->label_Test ->setText("Szukany string: "+ all_string + ui->comboBox_Mask->currentText());
-
 }
 
 void  MainWindow::animateFindingClick()
@@ -142,111 +143,177 @@ void MainWindow::on_lineEdit_Sep_textChanged(const QString &arg1)
     ui->label_Sep4->setText(arg1);
 }
 
-void MainWindow::on_lineEditFilter_textChanged(const QString &arg1)
-{
-    /*string2 = ui->lineEdit_Name2 ->text();
-    QDir myPath= ui->comboBox_Browse->currentText();
-    QRegExp reg_exp(myPath, QRegExp::Wildcard | Qt::CaseInsensitive);
-    reg_exp.setPatternSyntax(QRegExp::Wildcard);
-    if(reg_exp.exactMatch(string2)){
-    ui->listWidget_Errors->addItem()
-    }*/
-/*
-    QDir myPath= ui->comboBox_Browse->currentText();
-    myPath.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
-    myList = myPath.entryList();
-    ui->listWidget_Errors->addItems(myList);
-    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));
-
-    QRegExp regExp(arg1, Qt::CaseInsensitive, QRegExp::Wildcard);
-    ui->listWidget_Errors->clear();
-    ui->listWidget_Errors->addItems(myList.filter(regExp));
-    ui->label_Total->setText(QString("%1").arg(ui->listWidget_Errors->count()));*/
-}
-
 void MainWindow::showFiles2(const QStringList &files)
 {
+    ui -> listWidget_Results->clear();
     ui->listWidget_Results->addItems(files);
 }
 void MainWindow::Find_by()
 {
     ui->listWidget_Results->clear();
-    QString filter = ui->comboBox_Mask->currentText();
-
+    QString mask = ui->comboBox_Mask->currentText();
     QString sep = ui->lineEdit_Sep -> text();
+    //  odczytanie lineEdit
     QString string1 = ui->lineEdit_Name1 ->text();
     QString string2 = ui->lineEdit_Name2 ->text();
     QString string3 = ui->lineEdit_Name3 ->text();
     QString string4 = ui->lineEdit_Name4 ->text();
     QString string5 = ui->lineEdit_Name5 ->text();
 
-    QString targetStr = ui->lineEdit_Name2 ->text(); // What we search for
-
     QStringList listFiles; // list for matches targets
     QString directory = ui->comboBox_Browse->currentText(); // Where to search
-    QDirIterator iterator(directory, QStringList() << filter, QDir::Files, QDirIterator::Subdirectories);
-    while (iterator.hasNext()) {//zwraca false jesli nie napotka direct lub zwraca true jesli napotka,
+    QDirIterator iterator(directory, QStringList() << mask, QDir::Files, QDirIterator::Subdirectories);
+
+    while (iterator.hasNext())
+    {
+        //zwraca false jesli nie napotka direct lub zwraca true jesli napotka,
         QString filename = iterator.next(); //przejscie iteratora do kolejnego wejscia
+
         QFileInfo file(filename);
 
         if (file.isDir()) { // Check if it's a dir
             continue;
         }
 
-
-//       if (ismatch(filename, string1, string2, string3, string4, string5, sep, filter))
-//       {
-//           listFiles << filename;
-//       }
-
+       bool gen_Check;
+       if (gen_Check = ismatch(filename, string1, string2, string3, string4, string5, sep, mask))
+       {
+           listFiles << filename;
+       }
 
        //  If the filename contains target string - put it in the hitlist
-        if (file.fileName().contains(targetStr, Qt::CaseInsensitive)) {
-            listFiles << filename;
-             ui->label_Test2 ->setText(file.fileName());
-        }
-
-
+//        if (file.fileName().contains(string1, Qt::CaseInsensitive))
+//        {
+//            listFiles << filename;
+//        }
     }
- showFiles2(listFiles);
-
-//    rozszerzenie - suffix
-//    QFileInfo fi("/tmp/archive.tar.gz");
-//    QString file_suffix = fi.suffix();  // ext = "gz"*/
-
-//    //nazwa pliku - fileName
-//    QFileInfo fi("/tmp/archive.tar.gz");
-//    QString name = fi.fileName();
+    ui -> listWidget_Results->clear();
+    ui->listWidget_Results->addItems(listFiles);
 }
 
 bool MainWindow::ismatch(const QString &next_file_name, const QString &string1, const QString &string2, const QString &string3,
-                         const QString &string4, const QString &string5, const QString &separator, const QString &filter)
+                         const QString &string4, const QString &string5, const QString &separator, const QString &mask)
 {
-    QString filter_correct = filter;
-    filter_correct = filter_correct.remove(0, 1);
-    QString user_file_name = string1 + separator + string2 + separator + string3 + separator + string4 + separator + string5;
 
-    QString correct_next_file_name = next_file_name;
+    //  sprawdzenie comboReg czy rowne, lub rozne ("=" lub "<>")
+    QString *comboReg_check = new QString[5];
+    comboReg_check[0] = ui->comboBox_Reg1 -> currentText(); // tu moze byc tylko "=" lub "<>"
+    comboReg_check[1] = ui->comboBox_Reg2 -> currentText();
+    comboReg_check[2] = ui->comboBox_Reg3 -> currentText();
+    comboReg_check[3] = ui->comboBox_Reg4 -> currentText();
+    comboReg_check[4] = ui->comboBox_Reg5 -> currentText();
+    //sprawdzenie checkBox_name
 
-    int pos = correct_next_file_name.indexOf(filter_correct); //5
-    correct_next_file_name = correct_next_file_name.remove(pos, 5);
+    bool *checkBoxName_is_checked = new bool[5];
+    checkBoxName_is_checked[0] = ui->checkBox_Name1->isChecked();
+    checkBoxName_is_checked[1] = ui->checkBox_Name2->isChecked();
+    checkBoxName_is_checked[2] = ui->checkBox_Name3->isChecked();
+    checkBoxName_is_checked[3] = ui->checkBox_Name4->isChecked();
+    checkBoxName_is_checked[4] = ui->checkBox_Name5->isChecked();
 
-    //ui->listWidget_Errors ->addItems("File name: " + file.fileName());
-    QString * Tab_QStrFile = tab_File_Qstring(correct_next_file_name, 5, separator);
-    QString * Tab_QStrUser = tab_File_Qstring(user_file_name, 5, separator);
-    QStringList lists;
-    lists << Tab_QStrFile[0]<< Tab_QStrFile[1]<< Tab_QStrFile[2]<< Tab_QStrFile[3]<< Tab_QStrFile[4]<< Tab_QStrUser[0]<< Tab_QStrUser[1]<< Tab_QStrUser[2]<< Tab_QStrUser[3]<< Tab_QStrUser[4];
-    ui->listWidget_Errors->addItems(lists);
+    QString mask_correct = mask;
+    mask_correct = mask_correct.remove(0, 1); // *.pdf -> .pdf
+    QString user_file_name = string1+separator+string2+separator+string3+separator+string4+separator+string5+mask_correct;
+    QString * QStrFile = QString_to_Tab(next_file_name, 5, separator, mask_correct);
+    QString * QStrUser = QString_to_Tab(user_file_name, 5, separator, mask_correct);
+
+    bool *match = new bool[5];
+
+    //  pierwsza petla iteruje po kolejncych tresciach comboBoxów
+    for(int i = 0; i < 5; i++)
+    {
+        if(comboReg_check[i] == "=") // opcja z dopasowanie rownym("=") w jednej z reguł
+        {
+               // int y = QString::compare(QStrFile[j], QStrUser[j], Qt::CaseInsensitive);
+                if((QStrFile[i] == QStrUser[i]) || (checkBoxName_is_checked[i] == false))
+                {
+                    if(checkBoxName_is_checked[i] == false)
+                    {
+                        match[i] = true;    // uzywanjac continue, od miejsca jego postawienia
+                                            // nie jest wykonywana czesc kodu pod nią
+                        continue; //break - powoduje opuszczenie petli z iteratorem 'j'
+                    }//dzieki continue ponizszy kod sie nie wykonuje tylko petla iteruje dalej po "j" - cie
+                   // int z = QString::compare(QStrFile[j], QStrUser[j], Qt::CaseInsensitive);
+                    if(QStrFile[i] == QStrUser[i])
+                    {
+                        match[i] = true;
+                    }else{
+                        match[i] = false;
+                    }
+
+                }else{
+                    match[i] = false;
+                }
+        }
+        else if(comboReg_check[i] == "<>") // opcja z dopasowanie roznym ("<>") w jednej z reguł
+        {
+                if((QStrFile[i] == QStrUser[i]) || (checkBoxName_is_checked[i] == false))
+                {
+                    if(checkBoxName_is_checked[i] == false) // jezeli opuszcczamy czesc przy wyszukiwaniu od razu zwracamy true
+                    {
+                        match[i] = true;    // uzywanjac continue, od miejsca jego postawienia
+                                            // nie jest wykonywana czesc kodu pod nią
+                        continue; //break - powoduje opuszczenie petli z iteratorem 'j'
+                    }             //dzieki continue ponizszy kod sie nie wykonuje, tylko petla iteruje dalej po "j" - cie
+                    if(QStrFile[i] == QStrUser[i])
+                    {
+                        match[i] = false;
+                    }else
+                    {
+                        match[i] = true;
+                    }
+
+                }else{
+                    match[i] = true;
+                }
+        }
+    }
+
+    if((match[0] == true) && (match[1] == true) && (match[2] == true) && (match[3] == true) && (match[4] == true))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
-QString *MainWindow::tab_File_Qstring(const QString &FileQString, int size, const QString &separator)
+QString *MainWindow::QString_to_Tab(const QString &nextFileQString, int size, const QString &separator, const QString &mask)
+
 {
+    int pos;
     QString *newQTab = new QString[size];
-    QString tempQStMAIN = FileQString;
-   // tempQStMAIN = tempQStMAIN.append(separator);
+    QString mask_correct = mask;
+    mask_correct = mask_correct.remove(0, 1);
+    QString correct_nextFileQString = nextFileQString;
+
+
+    QString tempQStMAIN = correct_nextFileQString;;
+
+   // tempQStMAIN.indexOf(separator) ? tempQStMAIN = tempQStMAIN.append(separator) : tempQStMAIN = tempQStMAIN;
+
+   // fileName.isEmpty() ? QStringLiteral("*") : fileName;
+   // if QString = ""; --> QString::null;
+    QString *label_Sep_check;
+    label_Sep_check[0] = ui->label_Sep1 -> text();
+    label_Sep_check[1] = ui->label_Sep2 -> text();
+    label_Sep_check[2] = ui->label_Sep3 -> text();
+    label_Sep_check[3] = ui->label_Sep4 -> text();
+
     QString TempQstab = tempQStMAIN;
     QString TempQS_less_and_less = tempQStMAIN;
-    int pos;
+
+//    if((label_Sep_check[0] == "") && (label_Sep_check[1] == "") && (label_Sep_check[2] == "")
+//            && (label_Sep_check[3] == "") && (label_Sep_check[4] == ""))
+//    {
+//        newQTab[0] = tempQStMAIN;
+//        for(int i = 1 ; i<5 ; i++)
+//        {
+//            newQTab[i] = "SKIP";
+//        }
+//    }
 
     for(int i = 0; i < 5; i++)
     {
@@ -257,15 +324,29 @@ QString *MainWindow::tab_File_Qstring(const QString &FileQString, int size, cons
        TempQstab = TempQS_less_and_less;
     }
     return newQTab;
-    //ABCDE-12345-FGHIH-56789-HOPFD
+//    //ABCDE-12345-FGHIH-56789-HOPFD
 }
-
 
 void MainWindow::on_pushButton_Test_clicked()
 {
-    QString *Tab_QStrFile = tab_File_Qstring("ABCDE-12345-FGHIH-56789-HOPFD.*pdf", 5, ui->comboBox_Mask->currentText());
+    ui->listWidget_Errors -> clear();
+    QString mask = ui->comboBox_Mask->currentText();
+    QString sep = ui->lineEdit_Sep->text();
+
+    QString mask_correct = mask;
+    mask_correct = mask_correct.remove(0, 1); //.pdf
+    QString *Tab_QStrFile2 = QString_to_Tab("kartografia_wojtel" + mask_correct, 5, sep, mask);
     QStringList lists;
-    lists << Tab_QStrFile[0]<< Tab_QStrFile[1]<< Tab_QStrFile[2]<< Tab_QStrFile[3]<< Tab_QStrFile[4];
-    ui->listWidget_Errors->addItems(lists);
-    ui->label_Test2->setText(Tab_QStrFile[0]);
+    QString *QStrFile = new QString(2);
+    QString *QStrUser = new QString(2);
+
+    QStrUser[0] = "raz";
+    QStrUser[1] = "dwa";
+
+    QStrFile[0] = "raz";
+    QStrFile[1] = "trzy";
+    if(QStrFile[0] == QStrUser[0])
+    lists << Tab_QStrFile2[0] << Tab_QStrFile2[1] << Tab_QStrFile2[2] << Tab_QStrFile2[3] << Tab_QStrFile2[4];
+
+    ui->listWidget_Errors -> addItems(lists);
 }
