@@ -6,6 +6,7 @@
 
 QT       += core gui
 
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = TEST1_IGEKA
@@ -32,3 +33,6 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
+RC_ICONS = icon.ico
+@CONFIG += debug_and_release@

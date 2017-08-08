@@ -19,20 +19,21 @@ public:
     ~MainWindow();
     QString all_string;
 
-
 private slots:
     void on_pushButton_Browse_clicked();
     void on_pushButton_Analyse_clicked();
     void animateFindingClick();
-    void on_lineEditFilter_textChanged(const QString &arg1);
-    void on_lineEdit_Sep_textChanged(const QString &arg1);
     void Find_by();
+    void on_lineEdit_Sep_textChanged(const QString &arg1);
+    void on_pushButton_Test_clicked();
 
 private:
     Ui::MainWindow *ui;
     QStringList myList;
-    void showFiles2(const QStringList &files); //, const QString &arg1
-   // QStringList findFiles(const QStringList &files, const QString &text);
+    void showFiles(const QStringList &files);
+    bool ismatch(const QString &next_file_name, const QString string1, const QString string2, const QString string3,
+                 const QString string4, const QString string5, const QString &separator, const QString &filter);
+    QString *QString_to_Tab(const QString &FileQString, int size, const QString &separator, const QString &mask);
     QDir currentDir;
 };
 
